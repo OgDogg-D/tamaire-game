@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Hip-Hop Anime Character</title>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    font-family: "Helvetica Neue", sans-serif;
+  }
+  .stage {
+    position: relative;
+    width: 520px;
+    height: 720px;
+    background: radial-gradient(ellipse at center top, #2a2a4a 0%, #0a0a1a 100%);
+    border-radius: 20px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 40px, rgba(255,255,255,0.02) 40px 41px),
+      repeating-linear-gradient(0deg, transparent 0 40px, rgba(255,255,255,0.02) 40px 41px);
+    pointer-events: none;
+  }
+  .tag {
+    position: absolute;
+    bottom: 18px;
+    left: 24px;
+    color: #fff;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #ff2e63;
+    z-index: 10;
+  }
+  .tag span { color: #ffcc29; }
+  svg { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="tag">QUEEN <span>// STREET CREW</span></div>
+  <svg viewBox="0 0 520 720" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="skin" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stop-color="#ffe4cf"/>
+        <stop offset="1" stop-color="#f5c9a8"/>
+      </linearGradient>
+      <linearGradient id="hair" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stop-color="#3a1f18"/>
+        <stop offset="1" stop-color="#1a0d08"/>
+      </linearGradient>
+      <linearGradient id="shirt" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stop-color="#ffffff"/>
+        <stop offset="1" stop-color="#d8d8e0"/>
+      </linearGradient>
+      <linearGradient id="denim" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stop-color="#b9d0e4"/>
+        <stop offset="1" stop-color="#7a9bbd"/>
+      </linearGradient>
+      <linearGradient id="chain" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stop-color="#ffffff"/>
+        <stop offset="0.5" stop-color="#c8ccd6"/>
+        <stop offset="1" stop-color="#8a8e9a"/>
+      </linearGradient>
+      <radialGradient id="eye" cx="0.5" cy="0.4" r="0.6">
+        <stop offset="0" stop-color="#8e5a3a"/>
+        <stop offset="0.6" stop-color="#3a1e10"/>
+        <stop offset="1" stop-color="#120804"/>
+      </radialGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <pattern id="diamond" width="4" height="4" patternUnits="userSpaceOnUse">
+        <rect width="4" height="4" fill="#e8ecf4"/>
+        <circle cx="2" cy="2" r="0.8" fill="#ffffff"/>
+      </pattern>
+    </defs>
+
+    <!-- backdrop spotlight -->
+    <ellipse cx="260" cy="380" rx="240" ry="300" fill="url(#spot)" opacity="0.3"/>
+    <radialGradient id="spot"><stop offset="0" stop-color="#ff2e63" stop-opacity="0.4"/><stop offset="1" stop-color="transparent"/></radialGradient>
+
+    <!-- LEGS (baggy denim) -->
+    <path d="M 175 520 Q 150 620 145 700 L 230 700 Q 240 610 245 530 Z" fill="url(#denim)" stroke="#456785" stroke-width="2"/>
+    <path d="M 275 520 Q 270 610 290 700 L 375 700 Q 370 620 345 530 Z" fill="url(#denim)" stroke="#456785" stroke-width="2"/>
+    <!-- denim seams -->
+    <path d="M 190 540 Q 175 620 165 695" fill="none" stroke="#ffffff" stroke-width="1" stroke-dasharray="3 4" opacity="0.6"/>
+    <path d="M 330 540 Q 340 620 355 695" fill="none" stroke="#ffffff" stroke-width="1" stroke-dasharray="3 4" opacity="0.6"/>
+    <!-- rolled cuffs -->
+    <rect x="140" y="680" width="95" height="20" rx="4" fill="#9cb8d2" stroke="#456785" stroke-width="2"/>
+    <rect x="285" y="680" width="95" height="20" rx="4" fill="#9cb8d2" stroke="#456785" stroke-width="2"/>
+
+    <!-- sneakers (Jordan-ish) -->
+    <g>
+      <ellipse cx="185" cy="708" rx="55" ry="10" fill="#000" opacity="0.3"/>
+      <path d="M 135 695 Q 130 710 145 715 L 225 715 Q 240 712 235 700 L 235 690 L 135 690 Z" fill="#e8e8e8" stroke="#1a1a1a" stroke-width="2"/>
+      <path d="M 155 690 Q 165 680 195 682 L 230 685 L 235 690 L 135 690 Q 140 688 155 690 Z" fill="#ffcc29" stroke="#1a1a1a" stroke-width="2"/>
+      <path d="M 165 688 L 170 695 M 180 688 L 185 695 M 195 688 L 200 695 M 210 688 L 215 695" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
+    </g>
+    <g>
+      <ellipse cx="335" cy="708" rx="55" ry="10" fill="#000" opacity="0.3"/>
+      <path d="M 285 695 Q 280 710 295 715 L 375 715 Q 390 712 385 700 L 385 690 L 285 690 Z" fill="#e8e8e8" stroke="#1a1a1a" stroke-width="2"/>
+      <path d="M 305 690 Q 315 680 345 682 L 380 685 L 385 690 L 285 690 Q 290 688 305 690 Z" fill="#1a1a1a"/>
+      <path d="M 315 688 L 320 695 M 330 688 L 335 695 M 345 688 L 350 695 M 360 688 L 365 695" stroke="#ffffff" stroke-width="1.5" fill="none"/>
+    </g>
+
+    <!-- BODY: oversized white T-shirt -->
+    <path d="M 145 300 Q 120 340 115 380 L 135 520 Q 260 540 385 520 L 405 380 Q 400 340 375 300 L 320 285 Q 260 300 200 285 Z" fill="url(#shirt)" stroke="#a8a8b8" stroke-width="2"/>
+    <!-- shirt wrinkles -->
+    <path d="M 160 360 Q 170 420 155 500" fill="none" stroke="#c8c8d4" stroke-width="2" opacity="0.7"/>
+    <path d="M 360 360 Q 350 420 365 500" fill="none" stroke="#c8c8d4" stroke-width="2" opacity="0.7"/>
+    <path d="M 260 330 Q 255 420 260 510" fill="none" stroke="#d8d8e0" stroke-width="1.5" opacity="0.5"/>
+    <!-- collar -->
+    <path d="M 225 285 Q 260 300 295 285 Q 290 305 260 310 Q 230 305 225 285 Z" fill="#f0f0f5" stroke="#a8a8b8" stroke-width="2"/>
+
+    <!-- ARMS (one raised, one at hip - dynamic pose) -->
+    <!-- left arm raised -->
+    <path d="M 145 305 Q 110 270 95 200 Q 88 175 100 170 Q 115 180 125 215 Q 140 275 155 310 Z" fill="url(#shirt)" stroke="#a8a8b8" stroke-width="2"/>
+    <ellipse cx="100" cy="170" rx="14" ry="16" fill="url(#skin)" stroke="#c89e7a" stroke-width="1.5"/>
+    <!-- peace fingers hint -->
+    <path d="M 95 158 L 93 145 M 105 158 L 107 145" stroke="#c89e7a" stroke-width="3" stroke-linecap="round"/>
+    <!-- right arm down -->
+    <path d="M 375 305 Q 410 340 420 400 Q 425 440 415 445 Q 400 440 395 400 Q 385 350 370 315 Z" fill="url(#shirt)" stroke="#a8a8b8" stroke-width="2"/>
+    <ellipse cx="415" cy="445" rx="15" ry="17" fill="url(#skin)" stroke="#c89e7a" stroke-width="1.5"/>
+
+    <!-- CHAIN NECKLACE -->
+    <g transform="translate(260 315)">
+      <path d="M -55 0 Q -50 20 -35 30 Q -20 38 0 40 Q 20 38 35 30 Q 50 20 55 0" fill="none" stroke="url(#chain)" stroke-width="8" stroke-linecap="round"/>
+      <g fill="url(#chain)" stroke="#6a6e7a" stroke-width="0.5">
+        <ellipse cx="-50" cy="5" rx="4" ry="3"/>
+        <ellipse cx="-40" cy="15" rx="4" ry="3"/>
+        <ellipse cx="-28" cy="25" rx="4" ry="3"/>
+        <ellipse cx="-15" cy="33" rx="4" ry="3"/>
+        <ellipse cx="0" cy="38" rx="4" ry="3"/>
+        <ellipse cx="15" cy="33" rx="4" ry="3"/>
+        <ellipse cx="28" cy="25" rx="4" ry="3"/>
+        <ellipse cx="40" cy="15" rx="4" ry="3"/>
+        <ellipse cx="50" cy="5" rx="4" ry="3"/>
+      </g>
+      <!-- QUEEN pendant -->
+      <g transform="translate(-30 42)">
+        <rect x="0" y="0" width="60" height="28" rx="4" fill="url(#diamond)" stroke="#9ea3b0" stroke-width="1.5"/>
+        <rect x="2" y="2" width="56" height="24" rx="3" fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.7"/>
+        <text x="30" y="19" text-anchor="middle" font-family="Impact, sans-serif" font-size="14" fill="#1a1a2e" font-weight="900" letter-spacing="1">QUEEN</text>
+        <!-- sparkles -->
+        <circle cx="6" cy="6" r="1.2" fill="#ffffff"/>
+        <circle cx="54" cy="22" r="1.2" fill="#ffffff"/>
+        <circle cx="30" cy="4" r="1" fill="#ffffff"/>
+      </g>
+    </g>
+
+    <!-- NECK -->
+    <path d="M 235 260 L 235 295 Q 260 305 285 295 L 285 260 Z" fill="url(#skin)" stroke="#c89e7a" stroke-width="1.5"/>
+    <path d="M 240 285 Q 260 290 280 285" fill="none" stroke="#d4a888" stroke-width="1" opacity="0.6"/>
+
+    <!-- HEAD -->
+    <ellipse cx="260" cy="210" rx="72" ry="80" fill="url(#skin)" stroke="#c89e7a" stroke-width="1.5"/>
+    <!-- jaw shading -->
+    <path d="M 200 230 Q 210 270 260 285 Q 310 270 320 230" fill="none" stroke="#d4a888" stroke-width="1.5" opacity="0.5"/>
+    <!-- ears -->
+    <ellipse cx="192" cy="215" rx="8" ry="14" fill="url(#skin)" stroke="#c89e7a" stroke-width="1.5"/>
+    <ellipse cx="328" cy="215" rx="8" ry="14" fill="url(#skin)" stroke="#c89e7a" stroke-width="1.5"/>
+    <circle cx="328" cy="222" r="1.8" fill="#e0e4ec"/>
+
+    <!-- HAIR BASE -->
+    <path d="M 195 180 Q 190 135 230 120 Q 260 110 290 120 Q 330 135 325 180 Q 330 200 320 210 L 305 160 Q 260 150 215 160 L 200 210 Q 190 200 195 180 Z" fill="url(#hair)"/>
+
+    <!-- BANTU KNOTS (7 knots across the top) -->
+    <g fill="url(#hair)" stroke="#15070a" stroke-width="1">
+      <!-- each knot: a cluster of small bumps forming a pineapple/spike -->
+      <g transform="translate(200 130)">
+        <ellipse cx="0" cy="0" rx="14" ry="18"/>
+        <circle cx="-5" cy="-8" r="5"/><circle cx="5" cy="-10" r="5"/>
+        <circle cx="-7" cy="2" r="5"/><circle cx="7" cy="4" r="5"/>
+        <circle cx="0" cy="-14" r="4"/>
+      </g>
+      <g transform="translate(225 108)">
+        <ellipse cx="0" cy="0" rx="13" ry="17"/>
+        <circle cx="-5" cy="-7" r="4.5"/><circle cx="5" cy="-9" r="4.5"/>
+        <circle cx="-6" cy="3" r="4.5"/><circle cx="6" cy="4" r="4.5"/>
+        <circle cx="0" cy="-13" r="4"/>
+      </g>
+      <g transform="translate(258 98)">
+        <ellipse cx="0" cy="0" rx="14" ry="18"/>
+        <circle cx="-6" cy="-8" r="5"/><circle cx="6" cy="-9" r="5"/>
+        <circle cx="-7" cy="3" r="5"/><circle cx="7" cy="4" r="5"/>
+        <circle cx="0" cy="-14" r="4.5"/>
+      </g>
+      <g transform="translate(292 108)">
+        <ellipse cx="0" cy="0" rx="13" ry="17"/>
+        <circle cx="-5" cy="-7" r="4.5"/><circle cx="5" cy="-9" r="4.5"/>
+        <circle cx="-6" cy="3" r="4.5"/><circle cx="6" cy="4" r="4.5"/>
+        <circle cx="0" cy="-13" r="4"/>
+      </g>
+      <g transform="translate(320 130)">
+        <ellipse cx="0" cy="0" rx="14" ry="18"/>
+        <circle cx="-5" cy="-8" r="5"/><circle cx="5" cy="-10" r="5"/>
+        <circle cx="-7" cy="2" r="5"/><circle cx="7" cy="4" r="5"/>
+        <circle cx="0" cy="-14" r="4"/>
+      </g>
+    </g>
+
+    <!-- HEADBAND (Atlanta Hawks inspired: red/yellow/white stripes) -->
+    <g>
+      <path d="M 188 165 Q 260 148 332 165 L 332 195 Q 260 180 188 195 Z" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+      <path d="M 188 172 Q 260 158 332 172 L 332 182 Q 260 168 188 182 Z" fill="#ffcc29"/>
+      <path d="M 188 178 Q 260 164 332 178 L 332 186 Q 260 172 188 186 Z" fill="#e63946"/>
+      <!-- logo badge -->
+      <g transform="translate(260 178)">
+        <circle cx="0" cy="0" r="10" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+        <path d="M -6 -2 Q -4 -6 0 -5 Q 4 -6 6 -2 Q 4 2 0 1 Q -4 2 -6 -2 Z M 0 -5 L 0 4" fill="#e63946"/>
+        <text x="0" y="8" text-anchor="middle" font-family="Impact" font-size="4" fill="#1a1a1a" font-weight="900">HAWKS</text>
+      </g>
+    </g>
+
+    <!-- FACE -->
+    <!-- eyebrows -->
+    <path d="M 218 200 Q 230 195 242 200" stroke="#2a1508" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M 278 200 Q 290 195 302 200" stroke="#2a1508" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+    <!-- big anime eyes -->
+    <g>
+      <!-- left eye -->
+      <ellipse cx="230" cy="222" rx="16" ry="20" fill="#ffffff"/>
+      <ellipse cx="230" cy="224" rx="13" ry="17" fill="url(#eye)"/>
+      <circle cx="230" cy="224" r="6" fill="#1a0804"/>
+      <circle cx="233" cy="219" r="4" fill="#ffffff"/>
+      <circle cx="226" cy="228" r="1.5" fill="#ffffff"/>
+      <!-- eyelashes -->
+      <path d="M 214 215 Q 220 210 230 210 Q 240 210 246 215" stroke="#1a0804" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M 215 218 L 212 213 M 220 212 L 219 206 M 227 210 L 227 204 M 235 210 L 237 204 M 243 213 L 246 208" stroke="#1a0804" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- sparkle under eye -->
+      <g transform="translate(225 248)" fill="#ffd6e8" opacity="0.9">
+        <path d="M 0 -3 L 1 0 L 3 0 L 1 1 L 2 3 L 0 2 L -2 3 L -1 1 L -3 0 L -1 0 Z"/>
+      </g>
+    </g>
+    <g>
+      <!-- right eye -->
+      <ellipse cx="290" cy="222" rx="16" ry="20" fill="#ffffff"/>
+      <ellipse cx="290" cy="224" rx="13" ry="17" fill="url(#eye)"/>
+      <circle cx="290" cy="224" r="6" fill="#1a0804"/>
+      <circle cx="293" cy="219" r="4" fill="#ffffff"/>
+      <circle cx="286" cy="228" r="1.5" fill="#ffffff"/>
+      <path d="M 274 215 Q 280 210 290 210 Q 300 210 306 215" stroke="#1a0804" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M 275 218 L 272 213 M 280 212 L 279 206 M 287 210 L 287 204 M 295 210 L 297 204 M 303 213 L 306 208" stroke="#1a0804" stroke-width="1.8" stroke-linecap="round"/>
+      <g transform="translate(295 248)" fill="#ffd6e8" opacity="0.9">
+        <path d="M 0 -3 L 1 0 L 3 0 L 1 1 L 2 3 L 0 2 L -2 3 L -1 1 L -3 0 L -1 0 Z"/>
+      </g>
+    </g>
+
+    <!-- nose -->
+    <path d="M 258 245 Q 260 255 263 250" stroke="#c89e7a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+    <!-- cheek blush -->
+    <ellipse cx="215" cy="255" rx="10" ry="5" fill="#ffb3b3" opacity="0.5"/>
+    <ellipse cx="305" cy="255" rx="10" ry="5" fill="#ffb3b3" opacity="0.5"/>
+
+    <!-- mouth: confident smirk -->
+    <path d="M 245 268 Q 260 278 275 268" stroke="#9a2a3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M 248 270 Q 260 276 272 270 Q 260 273 248 270 Z" fill="#c94a5a"/>
+
+    <!-- neon accents / vibe FX -->
+    <g opacity="0.8" filter="url(#glow)">
+      <circle cx="70" cy="100" r="3" fill="#ff2e63"/>
+      <circle cx="450" cy="140" r="4" fill="#ffcc29"/>
+      <circle cx="80" cy="400" r="3" fill="#08d9d6"/>
+      <circle cx="460" cy="500" r="3" fill="#ff2e63"/>
+      <path d="M 420 80 L 425 70 L 430 80 L 440 85 L 430 90 L 425 100 L 420 90 L 410 85 Z" fill="#ffcc29"/>
+      <path d="M 60 250 L 63 244 L 66 250 L 72 253 L 66 256 L 63 262 L 60 256 L 54 253 Z" fill="#08d9d6"/>
+    </g>
+  </svg>
+</div>
+</body>
+</html>

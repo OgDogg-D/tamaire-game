@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>たまいれらんぶ — おかしを あつめよう！</title>
+    <meta name="description" content="そらから おちてくる おかしを、ぐるぐる まわる しかくい はこに キャッチして あそぼう！こども むけの たまいれ ゲーム。">
+    <meta name="theme-color" content="#ff6fa8">
+
+    <!-- Open Graph / SNS -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="たまいれらんぶ — おかしを あつめよう！">
+    <meta property="og:description" content="そらから おちてくる おかしを、ぐるぐる まわる しかくい はこに キャッチして あそぼう！こども むけの たまいれ ゲーム。">
+    <meta name="twitter:card" content="summary">
+
+    <!-- Emoji favicon (no external file needed) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🍭%3C/text%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Mochiy+Pop+One&family=Hachi+Maru+Pop&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700;900&family=Rampart+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ========== Atmosphere ========== -->
+    <div class="atmos" aria-hidden="true">
+        <div class="atmos__sky"></div>
+        <div class="atmos__grid"></div>
+        <div class="atmos__glow atmos__glow--magenta"></div>
+        <div class="atmos__glow atmos__glow--cyan"></div>
+        <div class="atmos__glow atmos__glow--violet"></div>
+        <div class="atmos__glow atmos__glow--gold"></div>
+        <div class="atmos__scan"></div>
+        <div class="atmos__noise"></div>
+        <div class="atmos__kanji">
+            <span>祭</span><span>菓</span><span>夜</span><span>舞</span>
+            <span>玉</span><span>光</span><span>乱</span><span>宴</span>
+        </div>
+        <div class="atmos__particles">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="atmos__candy">
+            <span data-c="🍬"></span><span data-c="🍭"></span><span data-c="🍩"></span>
+            <span data-c="🧁"></span><span data-c="🍪"></span><span data-c="🍫"></span>
+            <span data-c="🍰"></span><span data-c="🍮"></span><span data-c="🍡"></span>
+            <span data-c="🍓"></span><span data-c="🍿"></span><span data-c="🍦"></span>
+            <span data-c="🍬"></span><span data-c="🍭"></span><span data-c="🍩"></span>
+            <span data-c="🧁"></span><span data-c="🍪"></span><span data-c="🍫"></span>
+        </div>
+        <div class="atmos__vignette"></div>
+    </div>
+
+    <!-- ========== Side vertical tapes ========== -->
+    <aside class="side-tape side-tape--left" aria-hidden="true">
+        <span class="side-tape__cap"></span>
+        <span class="side-tape__kanji">た</span>
+        <span class="side-tape__kanji">ま</span>
+        <span class="side-tape__kanji">い</span>
+        <span class="side-tape__kanji">れ</span>
+        <span class="side-tape__dash">— おかしまつり —</span>
+        <span class="side-tape__cap"></span>
+    </aside>
+    <aside class="side-tape side-tape--right" aria-hidden="true">
+        <span class="side-tape__cap"></span>
+        <span class="side-tape__mono">たまいれらんぶ</span>
+        <span class="side-tape__dot"></span>
+        <span class="side-tape__mono">おかしを あつめよう</span>
+        <span class="side-tape__dot"></span>
+        <span class="side-tape__mono">じゅんびOK!</span>
+        <span class="side-tape__cap"></span>
+    </aside>
+
+    <!-- ========== Stage ========== -->
+    <main class="stage">
+
+        <!-- ----- Stats row (outside the arena) ----- -->
+        <section class="stats" aria-label="てんすう / なげたかず / あたり">
+            <div class="stats__cell stats__cell--score">
+                <span class="stats__pict">⭐</span>
+                <div class="stats__meta">
+                    <span class="stats__label">てんすう</span>
+                    <span class="stats__jp">ポイント</span>
+                </div>
+                <span class="stats__value" id="score">0</span>
+            </div>
+            <div class="stats__cell stats__cell--shots">
+                <span class="stats__pict">🥎</span>
+                <div class="stats__meta">
+                    <span class="stats__label">なげたかず</span>
+                    <span class="stats__jp">かい</span>
+                </div>
+                <span class="stats__value" id="shots">0</span>
+            </div>
+            <div class="stats__cell stats__cell--acc">
+                <span class="stats__pict">🎯</span>
+                <div class="stats__meta">
+                    <span class="stats__label">あたり</span>
+                    <span class="stats__jp">めいちゅう</span>
+                </div>
+                <span class="stats__value" id="accuracy">0%</span>
+            </div>
+        </section>
+
+        <!-- ----- Ball picker (outside the arena so it doesn't block the throw zone) ----- -->
+        <section class="balls" aria-label="なげるたまを えらぶ">
+            <div class="balls__head">
+                <span class="balls__pict">🎾</span>
+                <span class="balls__title">なげるたまを えらぼう</span>
+                <span class="balls__rule"></span>
+                <span class="balls__current">いま：<b id="ballCurrent">おてだま</b></span>
+            </div>
+            <div class="balls__row" role="radiogroup" aria-label="なげるたま">
+                <button type="button" class="ball bd bd--beanbag is-active" data-ball="beanbag" role="radio" aria-checked="true" title="おてだま">
+                    <span class="bd__emoji">🟣</span>
+                    <span class="bd__name">おてだま</span>
+                </button>
+                <button type="button" class="ball bd bd--fruit" data-ball="fruit" role="radio" aria-checked="false" title="くだもの">
+                    <span class="bd__emoji">🍎</span>
+                    <span class="bd__name">くだもの</span>
+                </button>
+                <button type="button" class="ball bd bd--poop-boy" data-ball="poop_boy" role="radio" aria-checked="false" title="うんまるくん">
+                    <span class="bd__emoji">💩</span>
+                    <span class="bd__name">うんまる</span>
+                </button>
+                <button type="button" class="ball bd bd--poop-girl" data-ball="poop_girl" role="radio" aria-checked="false" title="うんひめちゃん">
+                    <span class="bd__emoji bd__emoji--girl">
+                        <canvas class="bd__canvas" id="ballIconGirl" width="56" height="56"></canvas>
+                    </span>
+                    <span class="bd__name">うんひめ</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ----- Arena ----- -->
+        <section class="arena">
+            <div class="arena__bezel">
+                <div class="arena__frame">
+                    <span class="arena__corner arena__corner--tl"></span>
+                    <span class="arena__corner arena__corner--tr"></span>
+                    <span class="arena__corner arena__corner--bl"></span>
+                    <span class="arena__corner arena__corner--br"></span>
+
+                    <div class="arena__header">
+                        <span class="arena__dot arena__dot--live"></span>
+                        <span class="arena__header-text">ステージ 1 &nbsp;·&nbsp; おかしの くに</span>
+                        <span class="arena__header-mono">あそび ちゅう!</span>
+                    </div>
+
+                    <div class="arena__screen">
+                        <canvas id="gameCanvas" width="800" height="600"></canvas>
+                        <div class="arena__scan"></div>
+                        <div class="arena__crosshair"></div>
+                        <div class="arena__vignette"></div>
+
+                        <!-- Arena action bar (START / RESET) -->
+                        <div class="arena__actions">
+                            <button class="arena-btn arena-btn--start" id="startBtn" type="button">
+                                <span class="arena-btn__ic">▶</span>
+                                <span class="arena-btn__jp">はじめる</span>
+                                <span class="arena-btn__en">スタート</span>
+                            </button>
+                            <button class="arena-btn arena-btn--reset" id="resetBtn" type="button">
+                                <span class="arena-btn__ic">↺</span>
+                                <span class="arena-btn__jp">やりなおし</span>
+                                <span class="arena-btn__en">リセット</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="arena__footer">
+                        <span class="arena__foot-mono">じゅんびOK</span>
+                        <span class="arena__foot-sep"></span>
+                        <span class="arena__foot-mono">さくさく うごく</span>
+                        <span class="arena__foot-sep"></span>
+                        <span class="arena__foot-mono">⚡ げんき モード</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ----- TOP5 ranking (outside the arena) ----- -->
+        <aside class="ranking" aria-label="ベスト 5 ランキング">
+            <div class="ranking__head">
+                <span class="ranking__title">🏆 ベスト&nbsp;5</span>
+                <span class="ranking__jp">じょうず さん</span>
+                <span class="ranking__rule"></span>
+                <button class="ranking__clear" id="clearRankBtn" type="button" title="ランキングを ぜんぶ けす">×</button>
+            </div>
+            <ol class="ranking__list" id="rankingList">
+                <!-- injected by ranking.js -->
+            </ol>
+        </aside>
+
+        <!-- ----- Mode selector ----- -->
+        <section class="lives" data-mode="free">
+            <div class="lives__head">
+                <span class="lives__badge">1</span>
+                <span class="lives__title">あそびかたを えらぼう</span>
+                <span class="lives__jp">モード</span>
+                <span class="lives__rule"></span>
+                <span class="lives__count" id="livesCountWrap" hidden>のこり · <b id="livesCount">3 / 3</b></span>
+            </div>
+            <div class="lives__grid">
+                <div class="lives__modes" role="radiogroup" aria-label="あそびかた">
+                    <button type="button" class="mode is-active" data-mode="free" role="radio" aria-checked="true">
+                        <span class="mode__bg"></span>
+                        <span class="mode__icon">♾</span>
+                        <span class="mode__body">
+                            <span class="mode__label">フリー</span>
+                            <span class="mode__sub">なんかいでも · れんしゅう</span>
+                        </span>
+                        <span class="mode__check">●</span>
+                    </button>
+                    <button type="button" class="mode mode--rank" data-mode="ranking" role="radio" aria-checked="false">
+                        <span class="mode__bg"></span>
+                        <span class="mode__icon">🏆</span>
+                        <span class="mode__body">
+                            <span class="mode__label">ランキング</span>
+                            <span class="mode__sub">3かい はずしたら おわり</span>
+                        </span>
+                        <span class="mode__check">●</span>
+                    </button>
+                </div>
+                <div class="lives__row" id="livesRow" aria-live="polite" hidden></div>
+            </div>
+        </section>
+
+        <!-- ----- Difficulty selector ----- -->
+        <section class="diffs" aria-label="むずかしさ">
+            <div class="diffs__head">
+                <span class="diffs__badge">2</span>
+                <span class="diffs__title">むずかしさを えらぼう</span>
+                <span class="diffs__jp">レベル</span>
+                <span class="diffs__rule"></span>
+                <span class="diffs__hint">あたるばしょの ひろさ</span>
+            </div>
+            <div class="diffs__row" role="radiogroup" aria-label="むずかしさ">
+                <button type="button" class="diff diff--easy" data-diff="easy" role="radio" aria-checked="false">
+                    <span class="diff__icon">🌸</span>
+                    <span class="diff__body">
+                        <span class="diff__label">やさしい</span>
+                        <span class="diff__sub">ひろいよ</span>
+                    </span>
+                    <span class="diff__check">●</span>
+                </button>
+                <button type="button" class="diff diff--medium is-active" data-diff="medium" role="radio" aria-checked="true">
+                    <span class="diff__icon">⚡</span>
+                    <span class="diff__body">
+                        <span class="diff__label">ふつう</span>
+                        <span class="diff__sub">ちょうどいい</span>
+                    </span>
+                    <span class="diff__check">●</span>
+                </button>
+                <button type="button" class="diff diff--hard" data-diff="hard" role="radio" aria-checked="false">
+                    <span class="diff__icon">🔥</span>
+                    <span class="diff__body">
+                        <span class="diff__label">むずかしい</span>
+                        <span class="diff__sub">せまいよ</span>
+                    </span>
+                    <span class="diff__check">●</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ----- Player register ----- -->
+        <section class="register">
+            <div class="register__head">
+                <span class="register__badge">3</span>
+                <span class="register__title">おなまえを いれよう</span>
+                <span class="register__jp">なまえ とうろく</span>
+                <span class="register__rule"></span>
+                <span class="register__status" id="playerStatus">いま：<b id="playerCurrent">とくめい</b></span>
+            </div>
+            <form class="register__row" id="playerForm" autocomplete="off">
+                <span class="register__prompt">なまえ &gt;</span>
+                <input
+                    class="register__input"
+                    id="playerInput"
+                    type="text"
+                    maxlength="12"
+                    placeholder="おなまえを かいてね (かかないと『とくめい』に なるよ)"
+                    spellcheck="false"
+                />
+                <button class="register__submit" type="submit">
+                    <span>とうろく</span>
+                    <span class="register__arrow">↵</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- ----- Footer ----- -->
+        <footer class="footer">
+            <div class="footer__legal">
+                <span>© たまいれらんぶ · おかしを あつめよう</span>
+                <span class="footer__sep">◇</span>
+                <span>エンターを おすか、がめんを タップ してね</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="game.js"></script>
+    <script src="ranking.js"></script>
+</body>
+</html>
