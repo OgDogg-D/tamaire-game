@@ -1745,7 +1745,6 @@
   // --- Difficulty selector (easy / medium / hard) ---
   const diffEls = document.querySelectorAll('.diff[data-diff]');
   function setDifficulty(diff) {
-    if (state.running) return;
     if (!DIFFICULTY_HITZONE[diff]) return;
     state.difficulty = diff;
     box.size = DIFFICULTY_BOX_SIZE[diff] || 150;
