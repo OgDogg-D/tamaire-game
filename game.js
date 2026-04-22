@@ -1532,52 +1532,77 @@
     ctx.fillStyle = '#ff1f8a';
     ctx.fillText(label, 4 + Math.cos(age * 0.5) * 2, 0);
 
-    // Score number: big prominent "+N てん" under the banner
-    ctx.globalAlpha = alpha;
-    const bonus = state.lastBonus || 0;
-    const bonusColor = bonus >= 5 ? '#ff1f8a' : bonus >= 3 ? '#ff8a3d' : '#ffc846';
-    // Slight bounce on the number for life
-    const numBounce = 1 + Math.sin(age * 0.25) * 0.06;
-    ctx.save();
-    ctx.translate(0, 96);
-    ctx.scale(numBounce, numBounce);
+    ctx.restore();
+    state.winText--;
 
+    // Score number drawn SEPARATELY in a clean, stable transform so it never
+    // gets hidden by the shake/rotate/scale of the banner above.
+    drawHitScoreNumber(alpha);
+  }
+
+  function drawHitScoreNumber(alpha) {
+    const bonus = state.lastBonus || 0;
+    if (bonus <= 0) return;
+    const age = 110 - state.winText;
+    // intro pop (0 → 1.3 → 1.05) then gentle breathing
+    const pop = age < 10
+      ? 0.5 + (age / 10) * 0.8
+      : age < 20
+        ? 1.3 - ((age - 10) / 10) * 0.25
+        : 1.05 + Math.sin((age - 20) * 0.2) * 0.04;
+
+    const bonusColor = bonus >= 5 ? '#ff1f8a' : bonus >= 3 ? '#ff8a3d' : '#ffc846';
     const numLabel = `+${bonus}`;
-    ctx.font = '900 80px "Mochiy Pop One", "Rampart One", sans-serif';
+
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, alpha);
+    // Position well below the あたり!! banner (H * 0.32 + banner size ≈ H * 0.5)
+    ctx.translate(W / 2, H * 0.52);
+    ctx.scale(pop, pop);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Big number
+    ctx.font = '900 96px "Mochiy Pop One", "Rampart One", sans-serif';
+
+    // soft glow halo
     ctx.shadowColor = bonusColor;
-    ctx.shadowBlur = 30;
+    ctx.shadowBlur = 32;
     ctx.fillStyle = bonusColor;
     ctx.fillText(numLabel, 0, 0);
     ctx.shadowBlur = 0;
 
+    // heavy white + dark outlines for max contrast
     ctx.lineJoin = 'round';
-    ctx.lineWidth = 12;
+    ctx.lineWidth = 16;
     ctx.strokeStyle = '#ffffff';
     ctx.strokeText(numLabel, 0, 0);
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 6;
     ctx.strokeStyle = '#4a1030';
     ctx.strokeText(numLabel, 0, 0);
 
-    const numGrad = ctx.createLinearGradient(0, -40, 0, 40);
+    // bright gradient fill (solid color, not a transparent one — avoids the
+    // same Safari/iPad glyph-invisibility bug we hit with the fruit emoji)
+    const numGrad = ctx.createLinearGradient(0, -52, 0, 52);
     numGrad.addColorStop(0, '#fff5e8');
     numGrad.addColorStop(0.5, '#ffe14d');
     numGrad.addColorStop(1, bonusColor);
     ctx.fillStyle = numGrad;
     ctx.fillText(numLabel, 0, 0);
 
-    // "てん" label to the right
-    ctx.font = 'bold 34px "Mochiy Pop One", "Rampart One", sans-serif';
+    // "てん" sub-label to the right of the number
     const numW = ctx.measureText(numLabel).width;
-    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 38px "Mochiy Pop One", "Rampart One", sans-serif';
+    ctx.textAlign = 'left';
+    ctx.lineWidth = 8;
     ctx.strokeStyle = '#4a1030';
-    ctx.lineWidth = 6;
-    ctx.strokeText('てん', numW / 2 + 26, 8);
-    ctx.fillText('てん', numW / 2 + 26, 8);
+    ctx.strokeText('てん', numW / 2 + 14, 10);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('てん', numW / 2 + 14, 10);
 
     ctx.restore();
-
-    ctx.restore();
-    state.winText--;
+    ctx.textAlign = 'start';
+    ctx.textBaseline = 'alphabetic';
   }
 
   function drawOverlay() {
