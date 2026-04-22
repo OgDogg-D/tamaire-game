@@ -1722,6 +1722,7 @@
     if (livesCountEl) livesCountEl.textContent = `${remaining} / ${state.maxMisses}`;
   }
 
+  const registerSection = document.querySelector('.register');
   function setMode(mode) {
     if (state.running) return;
     if (mode !== 'free' && mode !== 'ranking') return;
@@ -1735,11 +1736,15 @@
       el.setAttribute('aria-checked', active ? 'true' : 'false');
     });
     if (livesSection) livesSection.setAttribute('data-mode', mode);
+    // Name input only makes sense for ranking mode.
+    if (registerSection) registerSection.hidden = (mode !== 'ranking');
     updateHUD();
   }
   modeEls.forEach(el => {
     el.addEventListener('click', () => setMode(el.getAttribute('data-mode')));
   });
+  // Apply initial mode so the register section reflects the default (free → hidden).
+  setMode(state.mode);
 
   // --- Difficulty selector (easy / medium / hard) ---
   const diffEls = document.querySelectorAll('.diff[data-diff]');
