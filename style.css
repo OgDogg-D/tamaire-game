@@ -557,7 +557,13 @@ button:focus-visible {
 /* =====================================================================
    ARENA
    ===================================================================== */
-.arena { position: relative; }
+.arena {
+  position: relative;
+  /* Isolate the arena's rendering layer. Prevents neighbor sections' class-change
+     repaints from bleeding into the canvas's 60fps compositing layer. */
+  contain: layout paint;
+  transform: translateZ(0);
+}
 
 .arena__bezel {
   position: relative;
@@ -1174,6 +1180,9 @@ button:focus-visible {
     0 8px 22px rgba(255, 158, 207, 0.22);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+  /* Contain layout & paint so button class changes inside do not trigger
+     a repaint of the arena / canvas above. Keeps the game loop smooth. */
+  contain: layout paint style;
 }
 .lives   { background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(250, 240, 255, 0.85)); border-color: rgba(179, 136, 255, 0.3); }
 .diffs   { background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 248, 232, 0.85)); border-color: rgba(255, 168, 96, 0.35); }
@@ -1246,7 +1255,9 @@ button:focus-visible {
   border: 2px solid rgba(255, 168, 96, 0.3);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 2px 8px rgba(255, 168, 96, 0.15);
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+  /* Do NOT transition `background` — gradient-to-gradient interpolation is expensive
+     on iPad and causes the canvas game loop to drop frames during class changes. */
+  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   text-align: left;
 }
 .diff:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 6px 16px rgba(255, 168, 96, 0.28); }
@@ -1459,7 +1470,9 @@ button:focus-visible {
   color: transparent;
   border: 2px solid rgba(179, 136, 255, 0.4);
   background: #fff;
-  transition: all 0.2s ease;
+  /* `all` transitions every changing property including background/gradients
+     and is a known performance trap. Restrict to cheap GPU-accelerated ones. */
+  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .mode:hover {
   transform: translateY(-2px);
