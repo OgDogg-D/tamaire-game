@@ -40,6 +40,7 @@
     celebrate: 0,      // frames remaining for celebration
     celebrateBursts: [], // {x, y, t0, color}
     winText: 0,
+    lastBonus: 0,      // last hit bonus (shown in the win banner)
     scorePops: [],     // floating "+N" score pops at hit points
     slowmo: 0,         // frames of slow-motion remaining
     shockwave: 0,      // frames of radial shockwave animation
@@ -281,6 +282,7 @@
     state.score += bonus;
     state.hits++;
     state.flash = 42;
+    state.lastBonus = bonus;
     // Floating score pop at the hit point (rises + fades over ~60 frames).
     state.scorePops.push({
       bonus,
@@ -1530,14 +1532,49 @@
     ctx.fillStyle = '#ff1f8a';
     ctx.fillText(label, 4 + Math.cos(age * 0.5) * 2, 0);
 
-    // Sub tag "HIT! / PERFECT"
+    // Score number: big prominent "+N てん" under the banner
     ctx.globalAlpha = alpha;
-    ctx.font = 'bold 22px "Syncopate", sans-serif';
-    ctx.fillStyle = '#fff';
-    ctx.shadowColor = '#ff1f8a';
-    ctx.shadowBlur = 14;
-    ctx.fillText('☆  H I T ! !  ☆', 0, 74);
+    const bonus = state.lastBonus || 0;
+    const bonusColor = bonus >= 5 ? '#ff1f8a' : bonus >= 3 ? '#ff8a3d' : '#ffc846';
+    // Slight bounce on the number for life
+    const numBounce = 1 + Math.sin(age * 0.25) * 0.06;
+    ctx.save();
+    ctx.translate(0, 96);
+    ctx.scale(numBounce, numBounce);
+
+    const numLabel = `+${bonus}`;
+    ctx.font = '900 80px "Mochiy Pop One", "Rampart One", sans-serif';
+    ctx.shadowColor = bonusColor;
+    ctx.shadowBlur = 30;
+    ctx.fillStyle = bonusColor;
+    ctx.fillText(numLabel, 0, 0);
     ctx.shadowBlur = 0;
+
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = 12;
+    ctx.strokeStyle = '#ffffff';
+    ctx.strokeText(numLabel, 0, 0);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = '#4a1030';
+    ctx.strokeText(numLabel, 0, 0);
+
+    const numGrad = ctx.createLinearGradient(0, -40, 0, 40);
+    numGrad.addColorStop(0, '#fff5e8');
+    numGrad.addColorStop(0.5, '#ffe14d');
+    numGrad.addColorStop(1, bonusColor);
+    ctx.fillStyle = numGrad;
+    ctx.fillText(numLabel, 0, 0);
+
+    // "てん" label to the right
+    ctx.font = 'bold 34px "Mochiy Pop One", "Rampart One", sans-serif';
+    const numW = ctx.measureText(numLabel).width;
+    ctx.fillStyle = '#ffffff';
+    ctx.strokeStyle = '#4a1030';
+    ctx.lineWidth = 6;
+    ctx.strokeText('てん', numW / 2 + 26, 8);
+    ctx.fillText('てん', numW / 2 + 26, 8);
+
+    ctx.restore();
 
     ctx.restore();
     state.winText--;
@@ -1858,7 +1895,7 @@
     // reset run-specific counters on fresh start
     state.score = 0; state.shots = 0; state.hits = 0; state.misses = 0;
     state.beanbag = null; state.particles = []; state.holding = null;
-    state.celebrate = 0; state.celebrateBursts = []; state.winText = 0; state.scorePops = [];
+    state.celebrate = 0; state.celebrateBursts = []; state.winText = 0; state.scorePops = []; state.lastBonus = 0;
     state.gameOver = 0;
     state.running = true;
     updateHUD();
@@ -1867,7 +1904,7 @@
     state.running = false;
     state.score = 0; state.shots = 0; state.hits = 0; state.misses = 0;
     state.beanbag = null; state.particles = []; state.holding = null;
-    state.celebrate = 0; state.celebrateBursts = []; state.winText = 0; state.scorePops = [];
+    state.celebrate = 0; state.celebrateBursts = []; state.winText = 0; state.scorePops = []; state.lastBonus = 0;
     state.gameOver = 0;
     box.angle = Math.PI;
     updateHUD();
