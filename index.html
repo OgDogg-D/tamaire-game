@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Mochiy+Pop+One&family=Hachi+Maru+Pop&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700;900&family=Rampart+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20260422h">
+    <link rel="stylesheet" href="style.css?v=20260422i">
 </head>
 <body>
 
@@ -187,19 +187,6 @@
             </div>
         </section>
 
-        <!-- ----- TOP5 ranking (outside the arena) ----- -->
-        <aside class="ranking" aria-label="ベスト 5 ランキング">
-            <div class="ranking__head">
-                <span class="ranking__title">🏆 ベスト&nbsp;5</span>
-                <span class="ranking__jp">じょうず さん</span>
-                <span class="ranking__rule"></span>
-                <button class="ranking__clear" id="clearRankBtn" type="button" title="ランキングを ぜんぶ けす">×</button>
-            </div>
-            <ol class="ranking__list" id="rankingList">
-                <!-- injected by ranking.js -->
-            </ol>
-        </aside>
-
         <!-- ----- Difficulty selector ----- -->
         <section class="diffs" aria-label="むずかしさ">
             <div class="diffs__head">
@@ -297,6 +284,19 @@
             </form>
         </section>
 
+        <!-- ----- TOP5 ranking (bottom of the page) ----- -->
+        <aside class="ranking" aria-label="ベスト 5 ランキング">
+            <div class="ranking__head">
+                <span class="ranking__title">🏆 ベスト&nbsp;5</span>
+                <span class="ranking__jp">じょうず さん</span>
+                <span class="ranking__rule"></span>
+                <button class="ranking__clear" id="clearRankBtn" type="button" title="ランキングを ぜんぶ けす">×</button>
+            </div>
+            <ol class="ranking__list" id="rankingList">
+                <!-- injected by ranking.js -->
+            </ol>
+        </aside>
+
         <!-- ----- Footer ----- -->
         <footer class="footer">
             <div class="footer__legal">
@@ -311,7 +311,7 @@
     <!-- Toast -->
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <script src="game.js?v=20260422h"></script>
-    <script src="ranking.js?v=20260422h"></script>
+    <script src="game.js?v=20260422i"></script>
+    <script src="ranking.js?v=20260422i"></script>
 </body>
 </html>
