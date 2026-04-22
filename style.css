@@ -2110,9 +2110,31 @@ button:focus-visible {
    RESPONSIVE
    ===================================================================== */
 @media (max-width: 860px) {
-  body { padding: 14px clamp(10px, 3vw, 20px) 40px; }
-  .stage { gap: 16px; }
+  /* --- Mobile / iPhone: arena-first layout ---
+     On app launch the user should see the game canvas taking (nearly)
+     the full viewport. Stats / balls / ranking / mode / etc. are
+     accessible by scrolling down. */
+  body { padding: 4px clamp(4px, 1.5vw, 12px) 28px; }
+  .stage { display: flex; flex-direction: column; gap: 12px; }
   .side-tape { display: none; }
+
+  /* Reorder — arena first, controls below */
+  .arena    { order: 0; }
+  .balls    { order: 1; }
+  .stats    { order: 2; }
+  .ranking  { order: 3; }
+  .lives    { order: 4; }
+  .diffs    { order: 5; }
+  .register { order: 6; }
+  .footer   { order: 7; }
+
+  /* Maximize the canvas area: remove header/footer strips and tighten the bezel */
+  .arena__header, .arena__footer { display: none; }
+  .arena__bezel { padding: 2px; }
+  .arena__frame { padding: 4px; }
+
+  /* Push the arena to be the primary viewport content on first load */
+  .arena { margin-top: 2px; }
 
   .hero { gap: 10px; }
   .hero__chip { font-size: 10px; padding: 5px 10px; gap: 8px; }
