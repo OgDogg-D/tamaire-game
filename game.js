@@ -1274,9 +1274,8 @@
     if (!state.beanbag) {
       const kind = state.ballType;
       if (kind === 'fruit') {
-        // preview the fruit set (cycle by time)
-        const idx = Math.floor(state.time / 40) % FRUIT_EMOJI.length;
-        drawFruitBall(cx, cy, 26, FRUIT_EMOJI[idx], state.time * 0.05);
+        // Show a stable apple as the preview (actual thrown fruit is randomized).
+        drawFruitBall(cx, cy, 26, '🍎', 0);
       } else if (kind === 'poop_boy') {
         drawPoopBoy(cx, cy, 28, state.time * 0.1);
       } else if (kind === 'poop_girl') {
