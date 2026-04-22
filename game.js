@@ -946,15 +946,21 @@
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(spin || 0);
-    // soft halo so fruit pops out on dark bg
+    // soft halo so fruit pops out on any bg
     const halo = ctx.createRadialGradient(0, 0, r * 0.3, 0, 0, r * 2.1);
     halo.addColorStop(0, 'rgba(255, 210, 74, 0.55)');
     halo.addColorStop(1, 'rgba(255, 210, 74, 0)');
     ctx.fillStyle = halo;
     ctx.fillRect(-r * 2.1, -r * 2.1, r * 4.2, r * 4.2);
 
+    // IMPORTANT: reset fillStyle to a solid opaque color before drawing the
+    // emoji. On Safari/iPad, leaving a transparent-radial gradient as fillStyle
+    // can cause the emoji glyph to inherit the gradient's alpha and vanish
+    // (leaving only the halo "light"). A solid color preserves emoji coloring.
+    ctx.fillStyle = '#000';
+    ctx.globalAlpha = 1;
     const fs = r * 2.6;
-    ctx.font = `${fs}px "Segoe UI Emoji", sans-serif`;
+    ctx.font = `${fs}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(emoji, 0, 0);
