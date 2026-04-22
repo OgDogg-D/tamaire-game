@@ -40,6 +40,7 @@
     celebrate: 0,      // frames remaining for celebration
     celebrateBursts: [], // {x, y, t0, color}
     winText: 0,
+    scorePops: [],     // floating "+N" score pops at hit points
     slowmo: 0,         // frames of slow-motion remaining
     shockwave: 0,      // frames of radial shockwave animation
     shockX: 0, shockY: 0,
@@ -280,6 +281,14 @@
     state.score += bonus;
     state.hits++;
     state.flash = 42;
+    // Floating score pop at the hit point (rises + fades over ~60 frames).
+    state.scorePops.push({
+      bonus,
+      // world-space anchor (project each frame so it follows the box)
+      wx: hx, wy: hy, wz: hz,
+      t: 0,
+      life: 60,
+    });
     spawnConfetti(hx, hy, hz);
     triggerCelebration(hx, hy, hz);
     updateHUD();
@@ -1367,6 +1376,75 @@
     ctx.restore();
   }
 
+  // --- Floating "+N" score pops shown at the hit point on every scoreHit ---
+  function stepScorePops() {
+    if (!state.scorePops || state.scorePops.length === 0) return;
+    for (const p of state.scorePops) p.t++;
+    state.scorePops = state.scorePops.filter(p => p.t < p.life);
+  }
+
+  function drawScorePops() {
+    if (!state.scorePops || state.scorePops.length === 0) return;
+    for (const p of state.scorePops) {
+      const k = p.t / p.life;             // 0 → 1 over life
+      const rise = k * 90;                // pixels float upward
+      const alpha = k < 0.15 ? (k / 0.15) : (1 - (k - 0.15) / 0.85);
+      const pop = k < 0.2 ? (1 + (0.2 - k) * 2.0) : (1.2 - (k - 0.2) * 0.25);
+      // project the hit point into screen space each frame (moves with perspective)
+      const proj = project(p.wx, p.wy, p.wz);
+      if (!proj.visible) continue;
+      const sx = proj.x;
+      const sy = proj.y - rise;
+
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, alpha);
+      ctx.translate(sx, sy);
+      ctx.scale(pop, pop);
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      const label = `+${p.bonus}`;
+      const color = p.bonus >= 5 ? '#ff3b82' : p.bonus >= 3 ? '#ff8a3d' : '#ffd24a';
+
+      // outer glow
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 22;
+      ctx.font = '900 46px "Mochiy Pop One", "Rampart One", sans-serif';
+      ctx.fillStyle = color;
+      ctx.fillText(label, 0, 0);
+      ctx.shadowBlur = 0;
+
+      // heavy outline for contrast
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = 10;
+      ctx.strokeStyle = '#ffffff';
+      ctx.strokeText(label, 0, 0);
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = '#4a1030';
+      ctx.strokeText(label, 0, 0);
+
+      // bright fill gradient on top
+      const g = ctx.createLinearGradient(0, -24, 0, 24);
+      g.addColorStop(0, '#fff5e8');
+      g.addColorStop(0.5, '#ffe14d');
+      g.addColorStop(1, color);
+      ctx.fillStyle = g;
+      ctx.fillText(label, 0, 0);
+
+      // tiny "てん" below
+      ctx.font = 'bold 14px "M PLUS Rounded 1c", sans-serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#4a1030';
+      ctx.lineWidth = 4;
+      ctx.strokeText('てん', 0, 30);
+      ctx.fillText('てん', 0, 30);
+
+      ctx.restore();
+    }
+    ctx.textAlign = 'start';
+    ctx.textBaseline = 'alphabetic';
+  }
+
   function drawWinText() {
     if (state.winText <= 0) return;
     const t = state.winText;
@@ -1652,6 +1730,7 @@
     state.time++;
     if (state.celebrate > 0) state.celebrate--;
     if (state.shockwave > 0) state.shockwave--;
+    stepScorePops();
     if (state.running) {
       // Slow-motion: advance physics only every ~5 frames while slowmo > 0
       if (state.slowmo > 0) {
@@ -1688,6 +1767,7 @@
     drawSwipeGuide();
     drawShockwave();
     drawFlash();
+    drawScorePops();
     drawWinText();
     drawOverlay();
   }
@@ -1778,7 +1858,7 @@
     // reset run-specific counters on fresh start
     state.score = 0; state.shots = 0; state.hits = 0; state.misses = 0;
     state.beanbag = null; state.particles = []; state.holding = null;
-    state.celebrate = 0; state.celebrateBursts = []; state.winText = 0;
+    state.celebrate = 0; state.celebrateBursts = []; state.winText = 0; state.scorePops = [];
     state.gameOver = 0;
     state.running = true;
     updateHUD();
@@ -1787,7 +1867,7 @@
     state.running = false;
     state.score = 0; state.shots = 0; state.hits = 0; state.misses = 0;
     state.beanbag = null; state.particles = []; state.holding = null;
-    state.celebrate = 0; state.celebrateBursts = []; state.winText = 0;
+    state.celebrate = 0; state.celebrateBursts = []; state.winText = 0; state.scorePops = [];
     state.gameOver = 0;
     box.angle = Math.PI;
     updateHUD();
