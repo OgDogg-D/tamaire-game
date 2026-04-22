@@ -196,44 +196,10 @@
             </ol>
         </aside>
 
-        <!-- ----- Mode selector ----- -->
-        <section class="lives" data-mode="free">
-            <div class="lives__head">
-                <span class="lives__badge">1</span>
-                <span class="lives__title">あそびかたを えらぼう</span>
-                <span class="lives__jp">モード</span>
-                <span class="lives__rule"></span>
-                <span class="lives__count" id="livesCountWrap" hidden>のこり · <b id="livesCount">3 / 3</b></span>
-            </div>
-            <div class="lives__grid">
-                <div class="lives__modes" role="radiogroup" aria-label="あそびかた">
-                    <button type="button" class="mode is-active" data-mode="free" role="radio" aria-checked="true">
-                        <span class="mode__bg"></span>
-                        <span class="mode__icon">♾</span>
-                        <span class="mode__body">
-                            <span class="mode__label">フリー</span>
-                            <span class="mode__sub">なんかいでも · れんしゅう</span>
-                        </span>
-                        <span class="mode__check">●</span>
-                    </button>
-                    <button type="button" class="mode mode--rank" data-mode="ranking" role="radio" aria-checked="false">
-                        <span class="mode__bg"></span>
-                        <span class="mode__icon">🏆</span>
-                        <span class="mode__body">
-                            <span class="mode__label">ランキング</span>
-                            <span class="mode__sub">3かい はずしたら おわり</span>
-                        </span>
-                        <span class="mode__check">●</span>
-                    </button>
-                </div>
-                <div class="lives__row" id="livesRow" aria-live="polite" hidden></div>
-            </div>
-        </section>
-
         <!-- ----- Difficulty selector ----- -->
         <section class="diffs" aria-label="むずかしさ">
             <div class="diffs__head">
-                <span class="diffs__badge">2</span>
+                <span class="diffs__badge">1</span>
                 <span class="diffs__title">むずかしさを えらぼう</span>
                 <span class="diffs__jp">レベル</span>
                 <span class="diffs__rule"></span>
@@ -264,6 +230,40 @@
                     </span>
                     <span class="diff__check">●</span>
                 </button>
+            </div>
+        </section>
+
+        <!-- ----- Mode selector ----- -->
+        <section class="lives" data-mode="free">
+            <div class="lives__head">
+                <span class="lives__badge">2</span>
+                <span class="lives__title">あそびかたを えらぼう</span>
+                <span class="lives__jp">モード</span>
+                <span class="lives__rule"></span>
+                <span class="lives__count" id="livesCountWrap" hidden>のこり · <b id="livesCount">3 / 3</b></span>
+            </div>
+            <div class="lives__grid">
+                <div class="lives__modes" role="radiogroup" aria-label="あそびかた">
+                    <button type="button" class="mode is-active" data-mode="free" role="radio" aria-checked="true">
+                        <span class="mode__bg"></span>
+                        <span class="mode__icon">♾</span>
+                        <span class="mode__body">
+                            <span class="mode__label">フリー</span>
+                            <span class="mode__sub">なんかいでも · れんしゅう</span>
+                        </span>
+                        <span class="mode__check">●</span>
+                    </button>
+                    <button type="button" class="mode mode--rank" data-mode="ranking" role="radio" aria-checked="false">
+                        <span class="mode__bg"></span>
+                        <span class="mode__icon">🏆</span>
+                        <span class="mode__body">
+                            <span class="mode__label">ランキング</span>
+                            <span class="mode__sub">3かい はずしたら おわり</span>
+                        </span>
+                        <span class="mode__check">●</span>
+                    </button>
+                </div>
+                <div class="lives__row" id="livesRow" aria-live="polite" hidden></div>
             </div>
         </section>
 

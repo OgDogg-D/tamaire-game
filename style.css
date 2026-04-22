@@ -2119,13 +2119,14 @@ button:focus-visible {
   .stage { display: flex; flex-direction: column; gap: 12px; }
   .side-tape { display: none; }
 
-  /* Reorder — arena first, controls below */
+  /* Reorder — arena first, controls below.
+     むずかしさ → あそびかた の じゅんばん。 */
   .arena    { order: 0; }
   .balls    { order: 1; }
   .stats    { order: 2; }
   .ranking  { order: 3; }
-  .lives    { order: 4; }
-  .diffs    { order: 5; }
+  .diffs    { order: 4; }
+  .lives    { order: 5; }
   .register { order: 6; }
   .footer   { order: 7; }
 
