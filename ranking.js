@@ -131,7 +131,9 @@
   obs.observe(scoreEl, { childList: true, characterData: true, subtree: true });
 
   function commitSession() {
-    if (pendingSubmit && sessionPeak !== lastSubmittedScore) {
+    // ランキングに のこすのは ランキングモードの スコアだけ。
+    const isRanking = window.sweetsRushMode === 'ranking';
+    if (isRanking && pendingSubmit && sessionPeak !== lastSubmittedScore) {
       lastSubmittedScore = sessionPeak;
       tryRecord(sessionPeak);
     }
@@ -147,6 +149,9 @@
     commitSession();
   });
   window.addEventListener('beforeunload', commitSession);
+  // ランキングモードで 3かい はずして ゲームオーバーに なったとき、
+  // スタート / リセットを おさなくても じどうで きろくする。
+  window.addEventListener('sweetsRush:gameEnd', commitSession);
 
   // ----- Clear -----
   clearBtn.addEventListener('click', () => {

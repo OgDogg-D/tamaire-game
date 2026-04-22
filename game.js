@@ -265,6 +265,10 @@
     state.running = false;
     state.gameOver = 1;
     state.holding = null;
+    // Notify ranking.js so it can auto-commit the final score.
+    window.dispatchEvent(new CustomEvent('sweetsRush:gameEnd', {
+      detail: { mode: state.mode, score: state.score }
+    }));
   }
 
   function scoreHit(hx, hy, hz) {
