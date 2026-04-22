@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Cache-busting: prevent iPad / Safari から ふるい バージョンが でるのを ふせぐ -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>たまいれらんぶ — おかしを あつめよう！</title>
     <meta name="description" content="そらから おちてくる おかしを、ぐるぐる まわる しかくい はこに キャッチして あそぼう！こども むけの たまいれ ゲーム。">
     <meta name="theme-color" content="#ff6fa8">
@@ -19,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Mochiy+Pop+One&family=Hachi+Maru+Pop&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700;900&family=Rampart+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260422g">
 </head>
 <body>
 
@@ -307,7 +311,7 @@
     <!-- Toast -->
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <script src="game.js"></script>
-    <script src="ranking.js"></script>
+    <script src="game.js?v=20260422g"></script>
+    <script src="ranking.js?v=20260422g"></script>
 </body>
 </html>
