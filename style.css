@@ -1542,9 +1542,9 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 1px;
-  min-width: 108px;
-  padding: 10px 18px 9px;
-  border-radius: 18px;
+  min-width: 64px;
+  padding: 6px 12px 5px;
+  border-radius: 12px;
   font-family: var(--f-stencil);
   font-weight: 700;
   line-height: 1;
@@ -1556,23 +1556,22 @@ button:focus-visible {
   user-select: none;
 }
 .arena-btn__ic {
-  font-size: 20px;
+  font-size: 14px;
   line-height: 1;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 .arena-btn__jp {
   font-family: var(--f-stencil);
-  font-size: 18px;
-  letter-spacing: 0.04em;
-  margin-top: 1px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
 }
 .arena-btn__en {
   font-family: var(--f-body);
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  opacity: 0.85;
-  margin-top: 3px;
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+  margin-top: 1px;
 }
 .arena-btn:hover {
   transform: translateY(-2px);
@@ -1611,19 +1610,21 @@ button:focus-visible {
     0 8px 22px rgba(179, 136, 255, 0.5);
 }
 
-@media (max-width: 520px) {
+@media (max-width: 860px) {
   .arena__actions {
-    top: 8px;
-    gap: 6px;
+    top: 6px;
+    gap: 5px;
   }
   .arena-btn {
-    min-width: 62px;
-    padding: 6px 10px 5px;
-    border-radius: 12px;
+    min-width: 0;
+    padding: 4px 9px 3px;
+    border-radius: 10px;
+    flex-direction: row;
+    gap: 5px;
   }
-  .arena-btn__ic { font-size: 14px; }
-  .arena-btn__jp { font-size: 13px; }
-  .arena-btn__en { font-size: 8px; letter-spacing: 0.16em; }
+  .arena-btn__ic { font-size: 12px; margin-bottom: 0; }
+  .arena-btn__jp { font-size: 11px; }
+  .arena-btn__en { display: none; }
 }
 
 /* =====================================================================

@@ -66,6 +66,10 @@
   // How far past the front face the ball may be and still score.
   const DIFFICULTY_Z_BACK  = { easy: 36, medium: 22, hard: 12 };
 
+  // Physical size of the catch box per difficulty.
+  // easy = large, medium = standard, hard = small.
+  const DIFFICULTY_BOX_SIZE = { easy: 195, medium: 150, hard: 110 };
+
   const FRUIT_EMOJI = ['🍎','🍊','🍇','🍓','🍑','🍋','🍉','🍍'];
 
   // Box orbits in a VERTICAL circle in front of the player.
@@ -1744,12 +1748,15 @@
     if (state.running) return;
     if (!DIFFICULTY_HITZONE[diff]) return;
     state.difficulty = diff;
+    box.size = DIFFICULTY_BOX_SIZE[diff] || 150;
     diffEls.forEach(el => {
       const active = el.getAttribute('data-diff') === diff;
       el.classList.toggle('is-active', active);
       el.setAttribute('aria-checked', active ? 'true' : 'false');
     });
   }
+  // Apply initial difficulty so box.size matches the default (medium).
+  setDifficulty(state.difficulty);
   diffEls.forEach(el => {
     el.addEventListener('click', () => setDifficulty(el.getAttribute('data-diff')));
   });
