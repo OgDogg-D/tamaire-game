@@ -11,6 +11,7 @@
   // Canvas内部サイズと投影パラメータは resize() で動的に更新する。
   // これにより portrait / landscape いずれのアスペクトでも歪みなく描画できる。
   const REF_W = 800;           // 設計時の基準横幅（FOCAL のスケーリングに使う）
+  const REF_H = 600;           // 設計時の基準縦幅（入力座標を正規化するのに使う）
   let W = canvas.width;
   let H = canvas.height;
   const CAM_Y = 180;
@@ -116,10 +117,14 @@
   }
 
   // --- Input ---
+  // IMPORTANT: pointer coordinates are returned in the REFERENCE 800×600 space
+  // so that swipe velocities (px/ms) stay calibrated against K_FWD/K_UP/K_SIDE
+  // no matter what aspect or DPR the canvas currently has. Without this,
+  // changing the canvas resolution would silently re-calibrate throw strength.
   function getPointerPos(e) {
     const rect = canvas.getBoundingClientRect();
-    const sx = W / rect.width;
-    const sy = H / rect.height;
+    const sx = REF_W / rect.width;
+    const sy = REF_H / rect.height;
     const p = e.touches ? e.touches[0] : e;
     return { x: (p.clientX - rect.left) * sx, y: (p.clientY - rect.top) * sy };
   }
@@ -128,7 +133,8 @@
     if (!state.running || state.beanbag) return;
     e.preventDefault();
     const p = getPointerPos(e);
-    if (p.y < H * 0.6) return;
+    // Swipe must start in the lower 40% of the play area. p.y is in ref space.
+    if (p.y < REF_H * 0.6) return;
     state.holding = {
       startX: p.x, startY: p.y,
       curX: p.x, curY: p.y,
