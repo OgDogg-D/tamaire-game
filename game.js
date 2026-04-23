@@ -8,12 +8,33 @@
   const startBtn = document.getElementById('startBtn');
   const resetBtn = document.getElementById('resetBtn');
 
-  const W = canvas.width;
-  const H = canvas.height;
-
+  // Canvas内部サイズと投影パラメータは resize() で動的に更新する。
+  // これにより portrait / landscape いずれのアスペクトでも歪みなく描画できる。
+  const REF_W = 800;           // 設計時の基準横幅（FOCAL のスケーリングに使う）
+  let W = canvas.width;
+  let H = canvas.height;
   const CAM_Y = 180;
-  const FOCAL = 520;
-  const HORIZON_Y = H * 0.58;
+  let FOCAL = 520;             // 基準: W=800 のとき 520
+  let HORIZON_Y = H * 0.58;
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    // DPR は 2 に抑える（iPad の 1800×2400 は重すぎ / フレーム落ちの原因）
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const newW = Math.max(1, Math.round(rect.width * dpr));
+    const newH = Math.max(1, Math.round(rect.height * dpr));
+    if (canvas.width !== newW || canvas.height !== newH) {
+      canvas.width = newW;
+      canvas.height = newH;
+    }
+    W = canvas.width;
+    H = canvas.height;
+    HORIZON_Y = H * 0.58;
+    // FOCAL を W に比例させることで、アスペクト比が変わっても
+    // 物体の見た目サイズ（画面幅に対する比率）を一定に保つ。
+    FOCAL = W * (520 / REF_W);
+  }
 
   function project(x, y, z) {
     const d = -z;
@@ -1966,6 +1987,12 @@
     drawPoopGirl(iconCanvas.width / 2, iconCanvas.height / 2 + 4, 22, 0, false);
     ctx = mainCtx;
   })();
+
+  // Initial canvas sizing + orientation / window resize hooks.
+  // requestAnimationFrame は、CSS レイアウトが確定してから寸法を取りたいため。
+  requestAnimationFrame(() => resize());
+  window.addEventListener('resize', resize);
+  window.addEventListener('orientationchange', () => setTimeout(resize, 120));
 
   updateHUD();
   loop();

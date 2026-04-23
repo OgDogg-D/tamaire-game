@@ -2163,11 +2163,11 @@ button:focus-visible {
   /* Push the arena to be the primary viewport content on first load */
   .arena { margin-top: 2px; }
 
-  /* On mobile portrait, 4:3 アスペクトだと画面の上半分しか使えず小さいので、
-     縦長のアリーナに切り替える。canvas の内部 800x600 はそのまま伸びて描画され、
-     視覚的には少し縦に伸びるが、プレイ領域は 約 2 倍になる。 */
+  /* モバイル縦画面では アリーナを 3:4（縦長）に拡張。
+     game.js の resize() が canvas 内部解像度を display × DPR に合わせて
+     動的に更新するため、アスペクトが変わっても歪みなく描画される。 */
   .arena__screen {
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 3 / 4;
   }
 
   .hero { gap: 10px; }
