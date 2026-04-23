@@ -2163,6 +2163,13 @@ button:focus-visible {
   /* Push the arena to be the primary viewport content on first load */
   .arena { margin-top: 2px; }
 
+  /* On mobile portrait, 4:3 アスペクトだと画面の上半分しか使えず小さいので、
+     縦長のアリーナに切り替える。canvas の内部 800x600 はそのまま伸びて描画され、
+     視覚的には少し縦に伸びるが、プレイ領域は 約 2 倍になる。 */
+  .arena__screen {
+    aspect-ratio: 4 / 5;
+  }
+
   .hero { gap: 10px; }
   .hero__chip { font-size: 10px; padding: 5px 10px; gap: 8px; }
   .hero__chip-tag { font-size: 9px; padding: 1px 6px; }
